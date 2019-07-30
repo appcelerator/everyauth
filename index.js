@@ -3,7 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 var connect = require('connect');
 var express = require('express');
 var ExpressRouter = require('express/lib/router');
-var __pause = connect.utils.pause;
+// var __pause = connect.utils.pause;
 var merge = require('./lib/utils').merge;
 
 var everyauth = module.exports = {};
@@ -90,7 +90,8 @@ function fetchUserFromSession (req, callback) {
   var auth = session && session.auth;
   if (!auth || !auth.userId) return callback();
   var everymodule = everyauth.everymodule;
-  var pause = __pause(req);
+  // var pause = __pause(req);
+  req.pause();
 
   var findUserById_function = everymodule.findUserById();
 
@@ -100,13 +101,13 @@ function fetchUserFromSession (req, callback) {
 
   function findUserById_callback (err, user) {
     if (err) {
-      pause.resume();
+      req.resume();
       return callback(err);
     }
     if (user) req.user = user;
     else delete session.auth;
     callback();
-    pause.resume();
+    req.resume();
   }
 }
 

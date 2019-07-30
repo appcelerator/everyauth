@@ -28,13 +28,13 @@
   "dependencies": {
     "oauth": "https://github.com/ciaranj/node-oauth/tarball/master",
     "request": "2.x",
-    "connect": "2.x",
+    "connect": "3.x",
     "openid": "0.x",
     "xml2js": "0.x",
     "node-swt": "0.x",
     "node-wsfederation": "0.x",
     "debug": "0.x",
-    "express": "3.x"
+    "express": "4.x"
   },
   "devDependencies": {
     "jade": "0.x",
