@@ -78,7 +78,7 @@ everyauth.azureacs
 
 everyauth
   .openid
-    .myHostname('http://local.host:3000')
+    .myHostname('http://localhost:3000')
     .findOrCreateUser( function (session, userMetadata) {
       return usersByOpenId[userMetadata.claimedIdentifier] ||
         (usersByOpenId[userMetadata.claimedIdentifier] = addUser('openid', userMetadata));
@@ -242,7 +242,7 @@ everyauth.yahoo
   .redirectPath('/');
 
 everyauth.googlehybrid
-  .myHostname('http://local.host:3000')
+  .myHostname('http://localhost:3000')
   .consumerKey(conf.googlehybrid.consumerKey)
   .consumerSecret(conf.googlehybrid.consumerSecret)
   .scope(['http://docs.google.com/feeds/','http://spreadsheets.google.com/feeds/'])
@@ -452,16 +452,13 @@ everyauth
 
 var app = express();
 app.use(express.static(__dirname + '/public'))
-  .use(express.favicon())
-  .use(express.bodyParser())
-  .use(express.cookieParser('htuayreve'))
-  .use(express.session())
+  .use(require('body-parser')())
+  .use(require('cookie-parser')('htuayreve'))
+  .use(require('express-session')())
   .use(everyauth.middleware());
 
-app.configure( function () {
   app.set('view engine', 'jade');
   app.set('views', everyauthRoot + '/example/views');
-});
 
 app.get('/', function (req, res) {
   res.render('home');
@@ -469,6 +466,6 @@ app.get('/', function (req, res) {
 
 app.listen(3000);
 
-console.log('Go to http://local.host:3000');
+console.log('Go to http://localhost:3000');
 
 module.exports = app;
