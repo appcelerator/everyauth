@@ -1,9 +1,7 @@
 var path = require('path');
 var EventEmitter = require('events').EventEmitter;
-var connect = require('connect');
 var express = require('express');
 var ExpressRouter = require('express/lib/router');
-// var __pause = connect.utils.pause;
 var merge = require('./lib/utils').merge;
 
 var everyauth = module.exports = {};
@@ -101,13 +99,11 @@ function fetchUserFromSession (req, callback) {
 
   function findUserById_callback (err, user) {
     if (err) {
-      req.resume();
       return callback(err);
     }
     if (user) req.user = user;
     else delete session.auth;
     callback();
-    req.resume();
   }
 }
 
